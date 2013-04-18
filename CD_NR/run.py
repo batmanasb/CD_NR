@@ -154,6 +154,9 @@ portalFrames,portalDust = loadImages("portalDoor",True)
 tntFrames,tntDust = loadImages("tntBlock",True)
 invisibleFrames,invisibleDust = loadImages("invisibleBlock",True)
 magnetPlatformFrames,magnetPlatformDust = loadImages("magnetPlatformBlock",True)
+barsFrames,barsDust = loadImages("barsBlock",True)
+blackFrames,blackDust = loadImages("blackBlock",True)
+voidMistFrames,voidMistDust = loadImages("voidMistBlock",True)
 	
 ##create game world
 #the world is one large Surface
@@ -218,8 +221,12 @@ def levelGen(blocks,peds,file):
 				blocks.append(land.Land(magnetPlatformFrames,x_loc,y_loc, magnetPlatformDust, "joint", "/"))
 			elif line[i] == "\\":
 				blocks.append(land.Land(magnetPlatformFrames,x_loc,y_loc, magnetPlatformDust, "joint", "\\"))
-			elif line[i] == "=":
-				blocks.append(land.Land(invisibleFrames,x_loc,y_loc, invisibleDust, "joint", "="))
+			elif line[i] == "X":
+				blocks.append(land.Land(blackFrames,x_loc,y_loc, blackDust, "joint", "="))
+			elif line[i] == "J":
+				blocks.append(land.Land(barsFrames,x_loc,y_loc, barsDust, "joint", "="))
+			elif line[i] == "V":
+				blocks.append(land.Land(voidMistFrames,x_loc,y_loc, voidMistDust, "joint", "="))
 			elif line[i] == "@":
 				blocks.append(land.Land(tntFrames,x_loc,y_loc, tntDust, "bridge", "@",s.fuse1))
 			elif line[i] == "#":
