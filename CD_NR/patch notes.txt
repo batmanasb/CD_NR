@@ -1,0 +1,24 @@
+4/17/2013
+	(Changed) organization of "settings.py"
+	(Added) new settings variables
+	(Added) 4 directional platforms
+	(Added) TNT with 4 different fuses
+	(Added) platform boundry block
+	(Added) invisible blocks used to restrict the movement of platforms
+		user, AI, and weapons are unaffected by these
+	
+4/16/2013
+	(Changed) wood and leaf physics
+	(Added) patch notes text file
+	(Added) Health restores when teleporting (to new levels)
+	(Fixed) Map editor now closes the files it opens
+		my appologies go out to all the mallocs I might or might not have trapped
+
+4/15/2013
+	(Changed) human AI behavior
+	(Added) map editor
+	(Added) settings tweaker as "settings.py"
+		(Added) Engine testing copy (DO NOT MODIFY)
+	(Fixed) various bugs
+		some of which related to AI and AI weapons
+	(Added) "Maps" folder with sample Level text files inside
