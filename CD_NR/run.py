@@ -5,7 +5,7 @@
 ## import modules
 import os, pygame, pygame.mixer, sys, glob, time, math, random
 ## import custom made modules 
-import land, mouse, player, sword, fist, spear, rifle, bullet, pellets, settings
+import land, mouse, player, sword, fist, spear, rifle, bullet, pellets, settings, sounds
 ## put commonly used in global namespace
 from pygame.locals import *
 pygame.init()
@@ -162,8 +162,8 @@ voidMistFrames,voidMistDust = loadImages("voidMistBlock",True)
 #the world is one large Surface
 #images are blit to the world, and then the world is blit to the screen
 #this enables scrolling
-#because Surfaces have a max size, I've been forced to limit the maps to 200 x 13 blocks (height can be increased up to 200 as well, i just didn't really want to yet)
-world_width, world_height = int(width*9.5), height
+#because Surfaces have a max size, I've been forced to limit the maps to 200 x 200 blocks
+world_width, world_height = int(width*9.5), int(width*9.5)
 world = pygame.Surface((world_width, world_height))
 
 
@@ -193,8 +193,8 @@ def levelGen(blocks,peds,file):
 	f = open(file,"r")
 	line = ""
 	
-	y_loc = 0*scalar
-	for b in range(13):
+	y_loc = sampleBlock.size*20
+	for b in range(200):
 		x_loc = sampleBlock.size*20
 		line = f.readline()
 		for i in range(200):
@@ -305,7 +305,7 @@ def main():
 	#pedCount,pedWeapons = map1(blocks,peds)
 	
 	pedCount,pedWeapons = levelGen(blocks,peds,maps[level])
-	world_x , world_y = user.x,0
+	world_x , world_y = user.x,user.y
 	world_dx, world_dy = 50*scalar,50*scalar
 	fps = s.fps
 	weaponEquipped = False
@@ -320,7 +320,9 @@ def main():
 	deletePedBulletsList = []
 	deletePedPelletsList = []
 	
-	while True:
+	sounds.loop('Background')	
+	
+	while True:		
 		clock.tick(fps)
 		yolo += 1
 		
@@ -337,6 +339,7 @@ def main():
 		world.fill((0,0,0))
 		headCollisions,chestCollisions,feetCollisions,topCollisions = 0,0,0,0
 		world_x = -user.x + 100*scalar
+		world_y = -user.y + 220*scalar
 		message = None
 		drop = False
 		grabbing = False
@@ -877,6 +880,7 @@ def main():
 		if ridingVer:
 			user.teleport(user.x,user.y+s.verticalPlatformSpeed*2*ridingVerDirection)
 		user.update(jump,left,right,headCollisions,topCollisions,chestCollisions,feetCollisions)
+		print user.y/sampleBlock.size
 		
 		##ped AI and updating
 		pNum = -1
@@ -1003,7 +1007,7 @@ def main():
 							user.feetAt+=s.pedsMeleeDmgToUsersFeet
 		
 		if user.y > world_height or user.dead:
-			print "You Lost!"
+			print "You Lost!",world_height/sampleBlock.size, world_width/sampleBlock.size
 			sys.exit()
 		
 		##show hitboxes
